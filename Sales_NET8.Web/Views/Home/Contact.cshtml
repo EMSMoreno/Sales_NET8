@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Contacto";
+}
+
+<h1>Contacto</h1>
+<p>
+    Se tiver alguma dúvida ou precisar de mais informações, não hesite em contactar-me através do formulário abaixo.
+</p>
+
+<h2>Informações de Contacto</h2>
+<p>
+    <strong>Email:</strong> emsmoreno97@gmail.com<br />
+    <strong>Endereço:</strong> Pólo de Educação e Formação D. João de Castro, R. Jau, 1300-312 Lisboa
+</p>
+
+<h2>Envie uma Mensagem</h2>
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Contact">
+            <div class="form-group">
+                <label for="Name">Nome</label>
+                <input type="text" class="form-control" id="Name" name="Name" required />
+            </div>
+            <div class="form-group">
+                <label for="Email">Email</label>
+                <input type="email" class="form-control" id="Email" name="Email" required />
+            </div>
+            <div class="form-group">
+                <label for="Message">Mensagem</label>
+                <textarea class="form-control" id="Message" name="Message" rows="4" required></textarea>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+</div>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.Message
+    </div>
+}
