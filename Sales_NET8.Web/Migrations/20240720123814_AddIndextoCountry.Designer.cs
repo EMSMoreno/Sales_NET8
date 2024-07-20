@@ -11,8 +11,8 @@ using Sales_NET8.Web.Data;
 namespace Sales_NET8.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240719201419_AddIndexToCountry")]
-    partial class AddIndexToCountry
+    [Migration("20240720123814_AddIndextoCountry")]
+    partial class AddIndextoCountry
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

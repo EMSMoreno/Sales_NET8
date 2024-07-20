@@ -5,7 +5,7 @@
 namespace Sales_NET8.Web.Migrations
 {
     /// <inheritdoc />
-    public partial class AddIndexToCountry : Migration
+    public partial class AddIndextoCountry : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
