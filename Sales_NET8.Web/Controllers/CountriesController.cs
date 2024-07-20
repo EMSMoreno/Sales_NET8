@@ -9,10 +9,10 @@ namespace Sales_NET8.Web.Controllers
     {
         private readonly IRepository _repository;
 
-        public CountriesController(IRepository repository)
-        {
-            _repository = repository;
-        }
+        //public CountriesController(IRepository repository)
+        //{
+        //    _repository = repository;
+        //}
 
         // GET: Countries
         public IActionResult Index()
