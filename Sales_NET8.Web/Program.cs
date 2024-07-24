@@ -12,10 +12,14 @@ namespace Sales_NET8.Web
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            //Add runtime compilation
+            builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+
             // Configure Entity Framework and the database context
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(connectionString));
+            options.UseSqlServer(connectionString));
+
 
             builder.Services.AddTransient<SeedDb>();
             builder.Services.AddScoped<IRepository, Repository>();
