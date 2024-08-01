@@ -1,5 +1,6 @@
-﻿using Sales_NET8.Web.Data.Entities;
-using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Sales_NET8.Web.Data.Entities;
+using System.Threading.Tasks;
 
 namespace Sales_NET8.Web.Data
 {
@@ -16,6 +17,12 @@ namespace Sales_NET8.Web.Data
         {
             await _context.Database.EnsureCreatedAsync();
 
+            await SeedCountriesAsync();
+            await SeedCategoriesAsync();
+        }
+
+        private async Task SeedCountriesAsync()
+        {
             if (!_context.Countries.Any())
             {
                 AddCountry("Argentina");
@@ -24,12 +31,34 @@ namespace Sales_NET8.Web.Data
                 AddCountry("Venezuela");
 
                 await _context.SaveChangesAsync();
-            }            
+            }
         }
 
         private void AddCountry(string name)
         {
             _context.Countries.Add(new Country
+            {
+                Name = name
+            });
+        }
+
+        private async Task SeedCategoriesAsync()
+        {
+            if (!_context.Categories.Any())
+            {
+                AddCategory("Categoria A");
+                AddCategory("Categoria B");
+                AddCategory("Categoria C");
+                AddCategory("Categoria D");
+                AddCategory("Categoria E");
+
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private void AddCategory(string name)
+        {
+            _context.Categories.Add(new Category
             {
                 Name = name
             });
