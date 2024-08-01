@@ -1,30 +1,27 @@
 ﻿@model Sales_NET8.Web.Data.Entities.Country
 
 @{
-    ViewData["Title"] = "Inserir";
+    ViewData["Title"] = "Criar País";
 }
 
-<h1>Inserir País</h1>
+<h1>Criar País</h1>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Inserir" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-success">Voltar para a Lista</a>
-            </div>
-        </form>
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
-</div>
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary">Criar</button>
+        <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+    </div>
+</form>
+
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

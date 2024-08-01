@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Sales_NET8.Web.Data;
 using Sales_NET8.Web.Data.Entities;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sales_NET8.Web.Controllers
 {
@@ -17,7 +19,8 @@ namespace Sales_NET8.Web.Controllers
         // GET: Countries
         public IActionResult Index()
         {
-            return View(_repository.GetCountries());
+            var countries = _repository.GetCountries();
+            return View(countries);
         }
 
         // GET: Countries/Details/5
@@ -44,8 +47,6 @@ namespace Sales_NET8.Web.Controllers
         }
 
         // POST: Countries/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Country country)
@@ -67,7 +68,7 @@ namespace Sales_NET8.Web.Controllers
                 }
                 catch (DbUpdateException)
                 {
-                    ModelState.AddModelError("", "Ocorreu um erro ao salvar as alterações. Por favor, tente novamente mais tarde. Se o problema persistir, entre em contato com o suporte.");
+                    ModelState.AddModelError("", "Ocorreu um erro ao salvar as alterações. Por favor, tente novamente mais tarde.");
                 }
             }
             return View(country);
@@ -86,12 +87,11 @@ namespace Sales_NET8.Web.Controllers
             {
                 return NotFound();
             }
+
             return View(country);
         }
 
         // POST: Countries/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Country country)
@@ -107,6 +107,8 @@ namespace Sales_NET8.Web.Controllers
                 {
                     _repository.UpdateCountry(country);
                     await _repository.SaveAllAsync();
+                    TempData["SuccessMessage"] = "País atualizado com sucesso!";
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -119,7 +121,6 @@ namespace Sales_NET8.Web.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(country);
         }
@@ -141,14 +142,19 @@ namespace Sales_NET8.Web.Controllers
             return View(country);
         }
 
-        // POST: Countries/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var country = _repository.GetCountry(id);
+            if (country == null)
+            {
+                return NotFound();
+            }
+
             _repository.RemoveCountry(country);
             await _repository.SaveAllAsync();
+            TempData["SuccessMessage"] = "País removido com sucesso!";
             return RedirectToAction(nameof(Index));
         }
     }

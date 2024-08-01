@@ -24,7 +24,7 @@ namespace Sales_NET8.Web.Data
                 AddCountry("Venezuela");
 
                 await _context.SaveChangesAsync();
-            }
+            }            
         }
 
         private void AddCountry(string name)

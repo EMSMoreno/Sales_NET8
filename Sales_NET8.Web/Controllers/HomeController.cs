@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Sales_NET8.Web.Data;
 using Sales_NET8.Web.Data.Entities;
 using Sales_NET8.Web.Models;
 using System.Diagnostics;
-using System.Linq;
 
 namespace Sales_NET8.Web.Controllers
 {
@@ -26,10 +24,76 @@ namespace Sales_NET8.Web.Controllers
             return View(countries);
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
+        // Métodos para criar um novo país
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Country country)
+        {
+            if (ModelState.IsValid)
+            {
+                _repository.AddCountry(country);
+                await _repository.SaveAllAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(country);
+        }
+
+        // Métodos para editar um país existente
+        public IActionResult Edit(int id)
+        {
+            var country = _repository.GetCountry(id);
+            if (country == null)
+            {
+                return NotFound();
+            }
+            return View(country);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Country country)
+        {
+            if (id != country.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                _repository.UpdateCountry(country);
+                await _repository.SaveAllAsync();
+                TempData["SuccessMessage"] = "País atualizado com sucesso!";
+                return RedirectToAction(nameof(Index));
+            }
+            return View(country);
+        }
+
+        // Métodos para apagar/remover um país
+        public IActionResult Delete(int id)
+        {
+            var country = _repository.GetCountry(id);
+            if (country == null)
+            {
+                return NotFound();
+            }
+            return View(country);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var country = _repository.GetCountry(id);
+            _repository.RemoveCountry(country);
+            await _repository.SaveAllAsync();
+            TempData["SuccessMessage"] = "País removido com sucesso!";
+            return RedirectToAction(nameof(Index));
+        }
 
         public IActionResult About()
         {
@@ -44,7 +108,7 @@ namespace Sales_NET8.Web.Controllers
         [HttpPost]
         public IActionResult Contact(string Name, string Email, string Message)
         {
-            // Exemplo: enviar a mensagem por email
+            // Exemplo: enviar uma mensagem por email
             // EmailService.Send(Email, Message);
 
             ViewBag.Message = "A tua mensagem foi enviada com sucesso!";

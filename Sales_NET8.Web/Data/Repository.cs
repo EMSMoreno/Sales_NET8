@@ -37,11 +37,6 @@ namespace Sales_NET8.Web.Data
             _context.Countries.Remove(country);
         }
 
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
-        }
-
         public bool CountryExists(int id)
         {
             return _context.Countries.Any(e => e.Id == id);
@@ -50,6 +45,11 @@ namespace Sales_NET8.Web.Data
         public bool CountryNameExists(string name)
         {
             return _context.Countries.Any(e => e.Name == name);
+        }
+
+        public async Task<bool> SaveAllAsync()
+        {
+            return (await _context.SaveChangesAsync()) > 0;
         }
     }
 }

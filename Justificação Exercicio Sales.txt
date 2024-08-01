@@ -1,5 +1,0 @@
-
-1) O que deve acontecer na app quando se tenta inserir um país com o mesmo nome (já existente) é retornar um erro com o índice no nome do país, através do método do POST do Controller, ou seja lida com uma exceção na base de dados.
-
-2) Sim porque não me estava a aparecer a opção de dar commit diretamente no projeto com as alterações, por isso tive que criar um projeto do zero e enganei-me nalgumas coisas então tentei remediar com commits.
-

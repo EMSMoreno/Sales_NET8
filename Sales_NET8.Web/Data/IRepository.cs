@@ -4,6 +4,7 @@ namespace Sales_NET8.Web.Data
 {
     public interface IRepository
     {
+        // Countries
         void AddCountry(Country country);
         bool CountryExists(int id);
         bool CountryNameExists(string name);
